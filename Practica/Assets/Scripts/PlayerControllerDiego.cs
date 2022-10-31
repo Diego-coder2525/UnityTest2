@@ -21,19 +21,43 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.A))
         {
-            rgb2d.velocity = new Vector2(-speed,rgb2d.velocity.y);
-            animator.SetBool("Run", true);
+            if (Input.GetKey(KeyCode.J))
+            {
+                animator.Play("PlayerShootRun");
+            }
+            else
+            {
+                animator.Play("PlayerRun");
+            }
+            rgb2d.velocity = new Vector2(-speed, rgb2d.velocity.y);
             transform.localScale = new Vector2(-1, 1);
-        }else if (Input.GetKey(KeyCode.D))
+
+        } else if (Input.GetKey(KeyCode.D))
         {
+            if (Input.GetKey(KeyCode.J))
+            {
+                animator.Play("PlayerShootRun");
+            }
+            else
+            {
+                animator.Play("PlayerRun");
+            }
             rgb2d.velocity = new Vector2(speed, rgb2d.velocity.y);
-            animator.SetBool("Run", true);
             transform.localScale = new Vector2(1, 1);
         }
         else
         {
+            if (Input.GetKey(KeyCode.J))
+            {
+                animator.Play("PlayerShootIdle");
+            }
+            else
+            {
+                animator.Play("PlayerIdle");
+            }
             rgb2d.velocity = new Vector2(0, rgb2d.velocity.y);
-            animator.SetBool("Run", false);
+            
+
         }
     }
 }
