@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class playerControllerBruno : MonoBehaviour
 {
+    public GameObject bulletPf;
     float speed;
     Rigidbody2D rgb2d;
     Animator animator;
+
+    float lastShoot;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +26,7 @@ public class playerControllerBruno : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.J))
             {
+                
                 animator.Play("PlayerShootRun");
             }
             else
@@ -37,6 +41,7 @@ public class playerControllerBruno : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.J))
             {
+               
                 animator.Play("PlayerShootRun");
             }
             else
@@ -50,6 +55,7 @@ public class playerControllerBruno : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.J))
             {
+    
                 animator.Play("PlayerShootIdle");
             }
             else
@@ -60,5 +66,21 @@ public class playerControllerBruno : MonoBehaviour
 
 
         }
+
+        if(Input.GetKey(KeyCode.J) && Time.time > lastShoot + 0.25f)
+        {
+            Shoot();
+            lastShoot = Time.time;
+        }
+
+
+    }
+    void Shoot()
+    {
+        Vector3 direction;
+        if (transform.localScale.x == 1f) direction = Vector2.right;
+        else direction = Vector2.left;
+        GameObject bullet = Instantiate(bulletPf, transform.position + direction * 0.1f, Quaternion.identity);
+        bullet.GetComponent<bullet>().setDirection(direction);
     }
 }
