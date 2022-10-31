@@ -2,63 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playerControllerBruno : MonoBehaviour
+public class playerControllerDiego : MonoBehaviour
 {
-    float speed;
+    [SerializeField]LayerMask layerMask;
+    float JumpForce;
     Rigidbody2D rgb2d;
-    Animator animator;
-
+    BoxCollider2D box2d;
+    public GameObject plataforma;
     // Start is called before the first frame update
     void Start()
     {
-        speed = 10f;
         rgb2d = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
+        box2d = GetComponent<BoxCollider2D>();
+        JumpForce = 15f;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
         {
-            if (Input.GetKey(KeyCode.J))
-            {
-                animator.Play("PlayerShootRun");
-            }
-            else
-            {
-                animator.Play("PlayerRun");
-            }
-            rgb2d.velocity = new Vector2(-speed, rgb2d.velocity.y);
-            transform.localScale = new Vector2(-1, 1);
-
+            rgb2d.velocity = Vector2.up * JumpForce;
         }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            if (Input.GetKey(KeyCode.J))
-            {
-                animator.Play("PlayerShootRun");
-            }
-            else
-            {
-                animator.Play("PlayerRun");
-            }
-            rgb2d.velocity = new Vector2(speed, rgb2d.velocity.y);
-            transform.localScale = new Vector2(1, 1);
-        }
-        else
-        {
-            if (Input.GetKey(KeyCode.J))
-            {
-                animator.Play("PlayerShootIdle");
-            }
-            else
-            {
-                animator.Play("PlayerIdle");
-            }
-            rgb2d.velocity = new Vector2(0, rgb2d.velocity.y);
 
-
-        }
+    }
+    bool isGrounded()
+    {
+        RaycastHit2D raycastHit2d = Physics2D.BoxCast(box2d.bounds.center, box2d.bounds.size, 0f, Vector2.down,.1f,layerMask);
+        return raycastHit2d.collider != null;
     }
 }
