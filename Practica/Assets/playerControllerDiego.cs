@@ -4,38 +4,32 @@ using UnityEngine;
 
 public class playerControllerDiego : MonoBehaviour
 {
-    float speed;
+    [SerializeField]LayerMask layerMask;
+    float JumpForce;
     Rigidbody2D rgb2d;
-    public float JumpForce;
-    Animator animator;
-    public bool Grounded;
+    BoxCollider2D box2d;
+    public GameObject plataforma;
     // Start is called before the first frame update
     void Start()
     {
-        speed = 10f;
         rgb2d = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
+        box2d = GetComponent<BoxCollider2D>();
+        JumpForce = 15f;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Physics2D.Raycast(transform.position, Vector3.down, 0.1f))
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
         {
-            Grounded = false;
-        }
-        else
-        {
-            Grounded = true;
-        }
-        if (Input.GetKeyDown(KeyCode.W) && Grounded)
-        {
-            Jump();
+            rgb2d.velocity = Vector2.up * JumpForce;
         }
 
     }
-    private void Jump()
+    bool isGrounded()
     {
-        rgb2d.AddForce(Vector2.up * JumpForce);
+        RaycastHit2D raycastHit2d = Physics2D.BoxCast(box2d.bounds.center, box2d.bounds.size, 0f, Vector2.down,.1f,layerMask);
+        return raycastHit2d.collider != null;
     }
 }
