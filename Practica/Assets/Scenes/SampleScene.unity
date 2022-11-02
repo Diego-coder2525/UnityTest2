@@ -1037,6 +1037,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPf: {fileID: 5163433709776275492, guid: 201b0b8b4c6305440a14984da06e740d, type: 3}
+  punta: {fileID: 905905984}
 --- !u!1 &1270795886
 GameObject:
   m_ObjectHideFlags: 0

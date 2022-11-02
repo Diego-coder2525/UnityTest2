@@ -5,6 +5,7 @@ using UnityEngine;
 public class playerControllerBruno : MonoBehaviour
 {
     public GameObject bulletPf;
+    public GameObject punta;
     float speed;
     Rigidbody2D rgb2d;
     Animator animator;
@@ -80,7 +81,7 @@ public class playerControllerBruno : MonoBehaviour
         Vector3 direction;
         if (transform.localScale.x == 1f) direction = Vector2.right;
         else direction = Vector2.left;
-        GameObject bullet = Instantiate(bulletPf, transform.position + direction * 0.1f, Quaternion.identity);
+        GameObject bullet = Instantiate(bulletPf, punta.transform.position + direction * 0.1f, Quaternion.identity);
         bullet.GetComponent<bullet>().setDirection(direction);
     }
 }
